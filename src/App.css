@@ -1,38 +1,120 @@
 .App {
   text-align: center;
+  padding: 20px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.d-flex-fdc {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.align-item-start {
+  align-items: flex-start;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.margin-auto {
+  margin: auto;
+}
+
+.width-60 {
+  width: 60%;
+}
+
+.main-bg {
+  background-color: #f7f7f7;
+}
+
+.padding-16 {
+  padding: 16px;
+}
+
+.width-100 {
+  width: 100%;
+}
+
+.padding-tb {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.save-btn {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 10px;
+}
+
+.margin-tb {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.padding-b-14 {
+  padding-bottom: 14px;
+}
+
+.font-600 {
+  font-weight: 600;
+}
+
+.font-normal {
+  font-weight: normal;
+}
+
+.width-80 {
+  width: 80%;
+}
+
+.justify-cont-end {
+  justify-content: flex-end;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.btn {
+  color: royalblue;
+  cursor: pointer;
+}
+
+.font-14 {
+  font-size: 14px;
+}
+
+.padding-r-6 {
+  padding-right: 6px;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.delete-icon {
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  margin-right: -28px;
+  background: lightgray;
+  border-radius: 15px;
+  padding: 6px;
+}
+
+.padding-t-14 {
+  padding-top: 14px
+}
+
+.down-arrow {
+  width: 15px;
+  height: 13px;
+  display: flex;
+  align-self: center;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.align-item-end {
+  align-items: flex-end;
 }
