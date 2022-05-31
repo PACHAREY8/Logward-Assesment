@@ -36,16 +36,17 @@ export default function Comment(props) {
             onChange={(event) => handleTxtFObjectChange("name", event, index)}
             variant="outlined"
             required={true}
+            style={{background: "white"}}
           />
         </div>
         <div className="width-100 d-flex-fdc padding-tb">
-          <TextField
-            placeholder="Comment "
-            type="text"
-            value={cComment}
-            onChange={(event) => handleTxtFObjectChange("comment", event, index)}
-            variant="outlined"
-            required={true}
+          <input
+              placeholder="Comment"
+              value={cComment}
+              onChange={(event) => handleTxtFObjectChange("comment", event, index)}
+              variant="outlined"
+              style={{padding: "0px 0px 20px 10px", borderRadius: "4px", border: "1px solid #c4c4c4",color: "currentcolor", fontSize:"14px"}}
+              required={true}
           />
         </div>
         <div className="save-btn">

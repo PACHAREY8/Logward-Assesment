@@ -118,3 +118,13 @@
 .align-item-end {
   align-items: flex-end;
 }
+
+input,
+input::placeholder {
+    font: 20px/3 sans-serif;
+    color: #a2a2a2;
+    font-size: 18px;
+}
+.width-98{
+width: 98%;
+}

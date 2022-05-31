@@ -14,7 +14,8 @@ export class ReplyComponent extends Component {
       commentArray: props?.commentArray || [],
       index: 0,
       isChildEdit: {},
-      subIndex: 0
+      subIndex: 0,
+      childEditState: {}
     }
   }
   componentDidUpdate(prevProps, prevState) {
@@ -37,16 +38,22 @@ export class ReplyComponent extends Component {
   }
 
   handleSubmit = () => {
-    const { commentArray, subIndex, index, isEdit, renderCommentSec } = this.state;
+    const { commentArray, subIndex, index, isEdit, renderCommentSec, isChildEdit } = this.state;
     let newArray = [];
     if (!isEdit[index]) {
-      localStorage.setItem('commentObj', JSON.stringify([...commentArray]));
-      renderCommentSec[index] = false
-      this.setState({
-        openSnackBar: true,
-        snackBarMessage: "Comment added successfully!",
-        renderCommentSec
-      });
+      if (isChildEdit?.[index]?.[subIndex]) {
+        newArray = [...commentArray]
+        localStorage.setItem('commentObj', JSON.stringify(newArray));
+        this.handleEdit(index, false, "reply", subIndex)
+      } else {
+        localStorage.setItem('commentObj', JSON.stringify([...commentArray]));
+        renderCommentSec[index] = false
+        this.setState({
+          openSnackBar: true,
+          snackBarMessage: "Comment added successfully!",
+          renderCommentSec
+        });
+      }
     } else {
       newArray = [...commentArray]
       localStorage.setItem('commentObj', JSON.stringify(newArray));
@@ -88,7 +95,7 @@ export class ReplyComponent extends Component {
             </span>
           </div>
           <div className='d-flex justify-between width-100'>
-            {!isChildEdit[subIndex] ? <div className='font-normal padding-b-14'>{comment}</div> : this.editCommentTextInput(commentArray, index, type, subIndex)}
+            {!isChildEdit?.[index]?.[subIndex] ? <div className='font-normal padding-b-14'>{comment}</div> : this.editCommentTextInput(commentArray, index, type, subIndex)}
             <img
               src={require("../Icons/delete.png")}
               alt="delete"
@@ -96,8 +103,8 @@ export class ReplyComponent extends Component {
               onClick={() => this.handleDeleteComment(index, type, subIndex)}
             />
           </div>
-          {!isChildEdit[subIndex] ? <div >
-            <span className="btn font-14" onClick={() => this.handleEdit(subIndex, true, "reply")} >Edit</span>
+          {!isChildEdit?.[index]?.[subIndex] ? <div >
+            <span className="btn font-14" onClick={() => this.handleEdit(index, true, "reply", subIndex)} >Edit</span>
           </div> : <div className="save-btn">
             <Button onClick={this.handleSubmit} style={{ backgroundColor: "royalblue" }}>UPDATE</Button>
           </div>}
@@ -123,7 +130,7 @@ export class ReplyComponent extends Component {
   editCommentTextInput = (commentArray, index, type, subIndex) => {
     const { comment } = type === "comment" ? commentArray[index] : commentArray[index]["child"][subIndex];
     return (
-      <div className="width-100 d-flex-fdc padding-tb">
+      <div className="width-98 d-flex-fdc padding-tb">
         <TextField
           placeholder="Comment"
           type="text"
@@ -136,17 +143,18 @@ export class ReplyComponent extends Component {
     )
   }
 
-  handleEdit = (mIndex, bool, type) => {
-    const { isEdit, isChildEdit } = this.state;
+  handleEdit = (mIndex, bool, type, sIndex) => {
+    let { isEdit, isChildEdit, childEditState } = this.state;
     if (type === "comment") {
       isEdit[mIndex] = bool;
     } else {
-      isChildEdit[mIndex] = bool;
+      childEditState[sIndex] = bool;
+      isChildEdit[mIndex] = childEditState
     }
     this.setState({
       isEdit,
       index: type === "comment" && mIndex,
-      subIndex: type === "comment" && mIndex,
+      subIndex: type === "reply" && mIndex,
       isChildEdit
     })
   }
@@ -166,7 +174,7 @@ export class ReplyComponent extends Component {
     this.setState({ commentArray })
   }
   renderParentUI = (commentArray, type) => {
-    const { renderCommentSec, isEdit, isChildEdit } = this.state;
+    const { renderCommentSec, isEdit } = this.state;
     return commentArray?.map((key, index) => {
       const { name = "", comment = "", dateNTime = null } = key || {};
       const [date, time] = dateNTime?.split("T") || "";
