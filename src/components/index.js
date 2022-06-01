@@ -10,12 +10,12 @@ export class Index extends Component {
         this.state = {
             commentObj: { name: "", comment: "", dateNTime: null, child: [] },
             openSnackBar: false,
-            commentArray: JSON.parse(localStorage.getItem("commentObj")),
+            commentArray: JSON.parse(localStorage.getItem("commentObj")) || [],
             snackBarMessage: ""
         }
     }
     componentDidUpdate(prevProps, prevState) {
-        const commentArray = JSON.parse(localStorage.getItem("commentObj"));
+        const commentArray = JSON.parse(localStorage.getItem("commentObj")) || [];
         if (prevState?.commentArray?.length !== commentArray?.length) {
             this.setState({
                 commentArray
@@ -46,7 +46,7 @@ export class Index extends Component {
                 snackBarMessage: "Please Enter Comment."
             })
         } else {
-            const commentArray = JSON.parse(localStorage.getItem("commentObj"));
+            const commentArray = JSON.parse(localStorage.getItem("commentObj")) || [];
             const newArray = commentArray !== null ? [...commentArray, ...[commentObj]] : [commentObj];
 
             localStorage.setItem('commentObj', JSON.stringify(newArray));
@@ -56,7 +56,6 @@ export class Index extends Component {
                 commentObj: {
                     name: "", comment: "", dateNTime: null, child: []
                 },
-                // commentArray: JSON.parse(localStorage.getItem("commentObj")),
             });
         }
     }
@@ -66,7 +65,7 @@ export class Index extends Component {
         })
     }
     render() {
-        const { commentObj, commentArray, snackBarMessage, openSnackBar } = this.state;
+        const { commentObj = [], commentArray = [], snackBarMessage, openSnackBar } = this.state;
         return (
             <div className='margin-auto width-60 d-flex-fdc'>
                 <Comment commentObj={commentObj} handleSubmit={this.handleSubmit} handleTxtFObjectChange={this.handleTxtFObjectChange} titleText="Comment" />

@@ -14,12 +14,11 @@ export class ReplyComponent extends Component {
       commentArray: props?.commentArray || [],
       index: 0,
       isChildEdit: {},
-      subIndex: 0,
-      childEditState: {}
+      subIndex: 0
     }
   }
   componentDidUpdate(prevProps, prevState) {
-    const commentArray = JSON.parse(localStorage.getItem("commentObj"));
+    const commentArray = JSON.parse(localStorage.getItem("commentObj")) || [];
     if (prevState?.commentArray?.length !== commentArray?.length) {
       this.setState({
         commentArray
@@ -144,12 +143,11 @@ export class ReplyComponent extends Component {
   }
 
   handleEdit = (mIndex, bool, type, sIndex) => {
-    let { isEdit, isChildEdit, childEditState } = this.state;
+    let { isEdit, isChildEdit } = this.state;
     if (type === "comment") {
       isEdit[mIndex] = bool;
     } else {
-      childEditState[sIndex] = bool;
-      isChildEdit[mIndex] = childEditState
+      isChildEdit[mIndex] = {[sIndex]: bool}
     }
     this.setState({
       isEdit,
